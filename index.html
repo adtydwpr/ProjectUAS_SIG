@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Peta Rumah Sakit Kota Sukabumi</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Peta Rumah Sakit Kota Sukabumi</h1>
+    <div id="map"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js"></script>
+    <script>
+        function initMap() {
+            // Buat objek peta
+            var map = new OpenLayers.Map("map");
+
+            // Buat layer untuk OpenStreetMap
+            var mapLayer = new OpenLayers.Layer.OSM();
+
+            // Tambahkan layer ke peta
+            map.addLayer(mapLayer);
+
+            // Tentukan koordinat dan level zoom awal (Kota Sukabumi)
+            var lonLat = new OpenLayers.LonLat(106.9273, -6.9222).transform(
+                new OpenLayers.Projection("EPSG:4326"), // WGS84
+                map.getProjectionObject() // Sistem koordinat peta
+            );
+            var zoomLevel = 13;
+
+            // Posisikan peta pada koordinat dan level zoom awal
+            map.setCenter(lonLat, zoomLevel);
+
+            // Tambahkan marker Rumah Sakit  
+            var markers = [
+                {
+                    name: 'RSUD Al-Mulk Kota Sukabumi  ',
+                    lon: 106.89724238149016, 
+                    lat: -6.954806755820421
+                    url: 'https://goo.gl/maps/2fiwi8dhuwNQtwoMA'
+                },
+                {
+                    name: 'RSUD R. Syamsudin, SH. (Bunut)',
+                    lon: 106.93479435332002,
+                    lat: -6.911421649279869, ,  
+                    url: 'https://goo.gl/maps/LmYK9oW2BDeqUTUk6'
+
+                },
+                {
+                    name: 'RS RIDOGALIH',
+                    lon: 106.93427936924438,
+                    lat: -6.917726924269602,
+                    url: 'https://goo.gl/maps/aohVMe27g94H8G2C7'
+
+                },
+                {
+                    name: 'RS Kartika Kasih',
+                    lon: 106.9232930422974,
+                    lat: -6.917386100746102, 
+                    url: 'https://goo.gl/maps/UU9HtZKC1hnRbxdC9'
+
+                },
+                {
+                    name: 'Rs Bhayangkara Setukpa',
+                    lon: 106.92243473550468,
+                    lat: -6.908183772675781, 
+                    url: 'https://goo.gl/maps/sJsrfuFHjz7ZAPqD7'
+
+                },
+                {
+                    name: 'RSI Assyifa Sukabumi',
+                    lon: 106.91659824931409,
+                    lat: -6.9151707418485024, 
+                    url: 'https://goo.gl/maps/NH8TQ9xUd3ZCei4R9'
+
+                },
+                {
+                    name: 'Primaya Hospital Sukabumi',
+                    lon: 106.95894109507564,
+                    lat: -6.914368996419294, 
+                    url: 'https://goo.gl/maps/kQDbComWHkp18KCi6'
+
+                },
+                {
+                    name: 'RSU Hermina Sukabumi',
+                    lon: 106.96115344284868,
+                    lat: -6.9132963750142995, 
+                    url: 'https://goo.gl/maps/swFAeDyQL2VLUqhZ6'
+                },
+                {
+                    name: 'Klinik Kimia Farma Sukabumi',
+                    lon: 106.9284428830538,
+                    lat: -6.915000329195261,  
+                    url: 'https://goo.gl/maps/zF9TZwjyiPK8wgkH8'
+                }
+            ];
+
+            // Buat layer untuk marker
+            var markerLayer = new OpenLayers.Layer.Markers("Markers");
+            map.addLayer(markerLayer);
+
+            // Tambahkan marker ke layer
+            for (var i = 0; i < markers.length; i++) {
+                var marker = new OpenLayers.Marker(
+                    new OpenLayers.LonLat(markers[i].lon, markers[i].lat).transform(
+                        new OpenLayers.Projection("EPSG:4326"), // WGS84
+                        map.getProjectionObject() // Sistem koordinat peta
+                    )
+                );
+                markerLayer.addMarker(marker);
+
+                // Tambahkan event click untuk mengarahkan ke halaman destinasi
+                marker.events.register('click', marker, function() {
+                    window.location.href = this.url;
+                });
+            }
+        }
+
+        // Panggil fungsi initMap saat halaman selesai diload
+        window.onload = initMap;
+    </script>
+</body>
+</html>
